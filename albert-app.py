@@ -17,13 +17,22 @@ st.set_page_config(
 # Apply custom CSS for visual styling
 st.markdown("""
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
     /* Main app styling */
+    body {
+        background: linear-gradient(135deg, #e8f0fe 0%, #ffffff 100%);
+        font-family: 'Roboto', sans-serif;
+    }
     .main .block-container {
         padding-top: 2rem;
         max-width: 1200px;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
     h1, h2, h3 {
-        color: #1E88E5;
+        color: #0D47A1;
     }
     
     /* Tab styling */
@@ -33,9 +42,10 @@ st.markdown("""
     .stTabs [data-baseweb="tab"] {
         height: 50px;
         white-space: pre-wrap;
-        background-color: #f0f2f6;
+        background-color: rgba(255,255,255,0.7);
         border-radius: 4px 4px 0 0;
         padding: 10px;
+        font-weight: bold;
     }
     .stTabs [aria-selected="true"] {
         background-color: #1E88E5;
@@ -50,9 +60,12 @@ st.markdown("""
         border-radius: 4px;
         padding: 0.5rem 1rem;
         font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        transition: background-color 0.3s ease, transform 0.2s ease;
     }
     .stButton>button:hover {
         background-color: #1565C0;
+        transform: translateY(-2px);
     }
     
     /* Download button styling */
@@ -73,16 +86,18 @@ st.markdown("""
     
     /* Data editor tweaks */
     [data-testid="stDataFrameResizable"] {
-        background-color: #f9f9f9;
+        background-color: #ffffff;
         border-radius: 5px;
         padding: 1rem;
         margin-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
     
     /* Sidebar styling */
     [data-testid="stSidebar"] {
         background-color: #f5f5f5;
         padding-top: 2rem;
+        box-shadow: inset -1px 0 0 rgba(0,0,0,0.1);
     }
     [data-testid="stSidebar"] [data-testid="stMarkdown"] h1 {
         margin-bottom: 1.5rem;
