@@ -144,6 +144,12 @@ def json_to_df(json_data):
             row['choices_formatted'] = format_choices(row['choices'])
             del row['choices']
         
+        # Ensure score_rating is properly formatted for editing
+        if 'score_rating' in row and row['score_rating'] is not None:
+            # Convert numeric values to strings for consistent editing
+            if isinstance(row['score_rating'], (int, float)):
+                row['score_rating'] = str(row['score_rating'])
+        
         # Add index for tracking
         row['item_index'] = i
         
@@ -175,20 +181,15 @@ def df_to_json(df, original_data=None):
         if 'choices_formatted' in row_dict:
             del row_dict['choices_formatted']
         
-        # Ensure score_rating is numeric if not empty
-        if 'score_rating' in row_dict and row_dict['score_rating'] and isinstance(row_dict['score_rating'], str):
-            try:
-                row_dict['score_rating'] = int(row_dict['score_rating'])
-            except ValueError:
-                try:
-                    row_dict['score_rating'] = float(row_dict['score_rating'])
-                except ValueError:
-                    pass
+        # Store score_rating as a string to ensure it remains editable
+        # This is the key fix - we'll store it as a string in the JSON
+        if 'score_rating' in row_dict and row_dict['score_rating'] is not None:
+            if isinstance(row_dict['score_rating'], (int, float)):
+                row_dict['score_rating'] = str(int(row_dict['score_rating']) if row_dict['score_rating'] == int(row_dict['score_rating']) else row_dict['score_rating'])
         
         result.append(row_dict)
     
     return result
-
 # -------------------- MAIN APP LAYOUT --------------------
 
 st.title("📚 Math Questions Editor")
