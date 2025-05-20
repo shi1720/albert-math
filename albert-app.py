@@ -17,62 +17,84 @@ st.set_page_config(
 # Apply custom CSS for visual styling
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
 
     /* Main app styling */
     body {
-        background: linear-gradient(135deg, #e8f0fe 0%, #ffffff 100%);
-        font-family: 'Roboto', sans-serif;
+        background: #F8F9FA; /* New background color */
+        font-family: 'Montserrat', sans-serif; /* New font */
+        color: #343A40; /* New default text color */
     }
     .main .block-container {
-        padding-top: 2rem;
-        max-width: 1200px;
-        background: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        padding-top: 2rem; /* Original padding-top, will be overridden by padding below */
+        max-width: 1200px; /* Original max-width */
+        background: #FFFFFF; /* New background */
+        border-radius: 12px; /* New border radius */
+        box-shadow: 0 8px 25px rgba(0,0,0,0.07); /* New box shadow */
+        padding: 2.5rem; /* New padding */
     }
     h1, h2, h3 {
-        color: #0D47A1;
+        color: #1A73E8; /* New heading color */
+        font-weight: 700; /* Ensure font weight is bold */
     }
+    h1 { margin-bottom: 1.5rem; }
+    h2 { margin-bottom: 1.25rem; }
+    h3 { margin-bottom: 1rem; }
     
     /* Tab styling */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 2px;
+        gap: 10px; /* New gap */
     }
     .stTabs [data-baseweb="tab"] {
-        height: 50px;
-        white-space: pre-wrap;
-        background-color: rgba(255,255,255,0.7);
-        border-radius: 4px 4px 0 0;
-        padding: 10px;
-        font-weight: bold;
+        height: 50px; /* Original height */
+        white-space: pre-wrap; /* Original white-space */
+        background-color: #E9ECEF; /* New inactive tab background */
+        color: #495057; /* New inactive tab text color */
+        border-radius: 6px 6px 0 0; /* New border radius */
+        padding: 12px 16px; /* New padding */
+        font-weight: 500; /* New font weight */
     }
     .stTabs [aria-selected="true"] {
-        background-color: #1E88E5;
-        color: white;
+        background-color: #1A73E8; /* New active tab background */
+        color: white; /* Active tab text color */
+        font-weight: 700; /* New font weight for active tab */
     }
     
     /* Button styling */
     .stButton>button {
-        background-color: #1E88E5;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 0.5rem 1rem;
-        font-weight: bold;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        transition: background-color 0.3s ease, transform 0.2s ease;
+        background-color: #1A73E8; /* New button background color */
+        color: white; /* Button text color */
+        border: none; /* Original border */
+        border-radius: 6px; /* New border radius */
+        padding: 0.75rem 1.5rem; /* New padding */
+        font-weight: 500; /* New font weight */
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* New box shadow */
+        transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Added box-shadow to transition */
     }
     .stButton>button:hover {
-        background-color: #1565C0;
-        transform: translateY(-2px);
+        background-color: #005fcb; /* New hover background color */
+        transform: translateY(-2px); /* Keep transform */
+        box-shadow: 0 6px 10px rgba(0,0,0,0.15); /* New hover box shadow */
     }
     
     /* Download button styling */
-    .download-button {
-        text-decoration: none;
+    .stDownloadButton {
+        display: inline-block;
+        background-color: #1A73E8;
         color: white;
-        font-weight: bold;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    }
+    .stDownloadButton:hover {
+        background-color: #005fcb;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        text-decoration: none;
     }
     
     /* Choices formatting */
@@ -86,21 +108,22 @@ st.markdown("""
     
     /* Data editor tweaks */
     [data-testid="stDataFrameResizable"] {
-        background-color: #ffffff;
-        border-radius: 5px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        background-color: #ffffff; /* Original background */
+        border-radius: 8px; /* New border radius */
+        padding: 1rem; /* Original padding */
+        margin-bottom: 1rem; /* Original margin */
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* New box shadow */
     }
     
     /* Sidebar styling */
     [data-testid="stSidebar"] {
-        background-color: #f5f5f5;
-        padding-top: 2rem;
-        box-shadow: inset -1px 0 0 rgba(0,0,0,0.1);
+        background-color: #EFF2F5; /* New background color */
+        padding-top: 2.5rem; /* New padding top */
+        box-shadow: inset -1px 0 0 rgba(0,0,0,0.1); /* Original box shadow */
     }
     [data-testid="stSidebar"] [data-testid="stMarkdown"] h1 {
-        margin-bottom: 1.5rem;
+        color: #1A73E8; /* New color */
+        margin-bottom: 1.5rem; /* Keep margin-bottom */
     }
     
     /* Custom CSS for rendering markdown inside table */
@@ -123,16 +146,8 @@ def get_download_link(json_data, filename):
     json_str = json.dumps(json_data, indent=2)
     b64 = base64.b64encode(json_str.encode()).decode()
     filename = filename.replace('.json', '') + '_updated.json'
-    href = f'<a href="data:file/json;base64,{b64}" download="{filename}" class="download-button">📥 Download {filename}</a>'
-    styled_href = f"""
-    <div style="margin: 20px 0; text-align: center;">
-        <div style="display: inline-block; background-color: #1E88E5; padding: 10px 20px; 
-                 border-radius: 5px; color: white; text-decoration: none;">
-            {href}
-        </div>
-    </div>
-    """
-    return styled_href
+    href = f'<a href="data:file/json;base64,{b64}" download="{filename}" class="stDownloadButton">📥 Download {filename}</a>'
+    return href
 
 def format_choices(choices):
     """Format choices for better display with markdown support"""
