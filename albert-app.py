@@ -604,7 +604,7 @@ with tab1:
                     unsafe_allow_html=True
                 )
                 # Rerun to refresh the data editor with canonical data from st.session_state.df
-                st.experimental_rerun()
+                st.rerun()
 
             elif 'updated_json' in st.session_state and not save_col.button("💾 Save All Changes to Full Dataset", use_container_width=True, key="resave_check_for_display_only"): # Re-display main download if exists
                  if st.session_state.updated_json: #Only show if there is data
@@ -619,7 +619,7 @@ with tab1:
                 for k in keys_to_clear:
                     if k in st.session_state: del st.session_state[k]
                 st.success("✅ All changes have been reset to the original data.")
-                st.experimental_rerun()
+                st.rerun()
                 
         except Exception as e:
             st.error(f"An error occurred: {str(e)}")
